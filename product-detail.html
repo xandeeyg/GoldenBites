@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Bites - Product Detail</title>
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="app-layout">
+        <header class="main-header">
+            <div class="header-left">
+                <a href="home.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            </div>
+            <div class="header-center">
+                <h1>Ateneo</h1>
+            </div>
+            <div class="header-right">
+                <!-- <div class="avatar">
+                    <i class="fa fa-gear" style="font-size:24px"></i>
+                </div> -->
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="product-detail">
+                <div class="product-image-container">
+                    <img src="./assets/pancake.jpg" alt="Pancake" class="product-img" id="product-image">
+                    </button>
+                </div>
+
+                <div class="product-tags">
+                    <span class="tag">Popular</span>
+                </div>
+
+                <div class="product-content">
+                    <h1 class="product-name" id="product-name">Pancake</h1>
+                    <div class="product-rating">
+                        <span class="star">⭐</span>
+                        <span id="product-rating">4.5</span>
+                        <span class="review-link">(See Review)</span>
+                    </div>
+
+                    <div class="product-price" id="product-price">₱ 20.00</div>
+                    
+
+                    <div class="quantity-control-container">
+                        <div class="quantity-control">
+                            <button class="qty-btn-minus">-</button>
+                            <span class="qty-value" id="qty-value">1</span>
+                            <button class="qty-btn-plus">+</button>
+                        </div>
+                    </div>
+
+                    <!-- <div class="add-ons">
+                        <h3 class="options-title">Choice of Add On</h3>
+                        <div class="option-item">
+                            <span class="option-name">Honey</span>
+                            <div class="option-right">
+                                <span class="option-price">+₱ 20</span>
+                                <input type="checkbox" class="addon-checkbox" data-price="20">
+                            </div>
+                        </div>
+                        <div class="option-item">
+                            <span class="option-name">Butter</span>
+                            <div class="option-right">
+                                <span class="option-price">+₱ 20</span>
+                                <input type="checkbox" class="addon-checkbox" data-price="20">
+                            </div>
+                        </div>
+                        <div class="option-item">
+                            <span class="option-name">Chocolate Syrup</span>
+                            <div class="option-right">
+                                <span class="option-price">+₱ 50</span>
+                                <input type="checkbox" class="addon-checkbox" data-price="50">
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="action-buttons">
+                        <a href="order-details.html" class="action-btn secondary-btn" id="add-to-cart">Add to cart</a>
+                        <a href="payment.html" class="action-btn primary-btn">Buy now</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="./assets/js/app.js"></script>
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // First, remove any existing event listeners by cloning and replacing elements
+            const qtyBtnPlus = document.querySelector('.qty-btn-plus');
+            const qtyBtnMinus = document.querySelector('.qty-btn-minus');
+            const qtyValue = document.getElementById('qty-value');
+            
+            if (qtyBtnPlus && qtyBtnMinus) {
+                const newQtyBtnPlus = qtyBtnPlus.cloneNode(true);
+                const newQtyBtnMinus = qtyBtnMinus.cloneNode(true);
+                
+                qtyBtnPlus.parentNode.replaceChild(newQtyBtnPlus, qtyBtnPlus);
+                qtyBtnMinus.parentNode.replaceChild(newQtyBtnMinus, qtyBtnMinus);
+            }
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const product = urlParams.get('product');
+
+            const products = {
+                'pancake': {
+                    name: 'Pancake',
+                    price: 20.00,
+                    image: './assets/pancake.jpg?height=300&width=600',
+                    rating: 4.5
+                },
+                'waffle': {
+                    name: 'Waffle',
+                    price: 20.00,
+                    image: './assets/waffle.jpg?height=300&width=600',
+                    rating: 3.8
+                }
+            };
+
+            if (product && products[product]) {
+                const productData = products[product];
+
+                // Display product details
+                document.getElementById('product-name').textContent = productData.name;
+                document.getElementById('product-price').textContent = `₱ ${productData.price.toFixed(2)}`;
+                document.getElementById('product-image').src = productData.image;
+                document.getElementById('product-image').alt = productData.name;
+                document.getElementById('product-rating').textContent = productData.rating;
+
+                document.title = `Golden Bites - ${productData.name}`;
+
+                let basePrice = productData.price;
+                const priceEl = document.getElementById('product-price');
+
+                // Initialize addons array
+                let selectedAddons = [];
+
+                // Update total price based on quantity and selected addons
+                function updateTotalPrice() {
+                    let total = basePrice;
+                    selectedAddons.forEach(addon => {
+                        total += addon.price;
+                    });
+                    total *= parseInt(qtyValue.textContent); // Adjust with quantity
+                    priceEl.textContent = `₱ ${total.toFixed(2)}`;
+                }
+
+                // Get the NEW quantity control buttons (after replacement)
+                const newQtyBtnPlus = document.querySelector('.qty-btn-plus');
+                const newQtyBtnMinus = document.querySelector('.qty-btn-minus');
+
+                // Increase quantity - add event listener to the NEW button
+                newQtyBtnPlus.addEventListener('click', function () {
+                    console.log('Plus button clicked'); // Debug log
+                    let quantity = parseInt(qtyValue.textContent);
+                    if (!isNaN(quantity)) {
+                        quantity++; // Increase by 1
+                        qtyValue.textContent = quantity;
+                        updateTotalPrice();
+                    }
+                });
+
+                // Decrease quantity - add event listener to the NEW button
+                newQtyBtnMinus.addEventListener('click', function () {
+                    console.log('Minus button clicked'); // Debug log
+                    let quantity = parseInt(qtyValue.textContent);
+                    if (!isNaN(quantity) && quantity > 1) {
+                        quantity--; // Decrease by 1
+                        qtyValue.textContent = quantity;
+                        updateTotalPrice();
+                    }
+                });
+
+                // Add/remove addons
+                const addonCheckboxes = document.querySelectorAll('.addon-checkbox');
+                addonCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', function () {
+                        const addonPrice = parseFloat(checkbox.getAttribute('data-price'));
+                        const addonName = checkbox.closest('.option-item').querySelector('.option-name').textContent;
+
+                        if (checkbox.checked) {
+                            selectedAddons.push({ name: addonName, price: addonPrice });
+                        } else {
+                            selectedAddons = selectedAddons.filter(addon => addon.name !== addonName);
+                        }
+
+                        updateTotalPrice(); // Recalculate total with addons
+                    });
+                });
+
+                // Function to save order details to localStorage
+                function saveOrderToLocalStorage() {
+                    const quantity = parseInt(qtyValue.textContent);
+                    const orderItems = [{
+                        name: productData.name,
+                        price: productData.price,
+                        quantity: quantity,
+                        addons: selectedAddons, // Note: using lowercase 'addons' consistently
+                        image: productData.image
+                    }];
+                    
+                    // Save to localStorage
+                    localStorage.setItem('orderItems', JSON.stringify(orderItems));
+                }
+
+                // Add to Cart logic
+                const addToCartBtn = document.getElementById('add-to-cart');
+                addToCartBtn.addEventListener('click', function (e) {
+                    e.preventDefault();  // Prevent default action
+
+                    const quantity = parseInt(qtyValue.textContent);  // Get the selected quantity
+                    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+                    // Create the new cart item
+                    const newItem = {
+                        name: productData.name,
+                        price: productData.price,
+                        quantity: quantity,
+                        addons: selectedAddons, // Note: using lowercase 'addons' consistently
+                        image: productData.image
+                    };
+
+                    // Add product and quantity to the cart with selected addons
+                    cartItems.push(newItem);
+
+                    // Save to localStorage
+                    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+                    
+                    // Show confirmation
+                    alert(`${productData.name} added to cart!`);
+                    
+                    // Redirect to cart page
+                    window.location.href = 'order-details.html';
+                });
+                
+                // Buy Now logic
+                const buyNowBtn = document.querySelector('.primary-btn');
+                buyNowBtn.addEventListener('click', function (e) {
+                    e.preventDefault();  // Prevent default action
+                    
+                    // Save order details to localStorage
+                    saveOrderToLocalStorage();
+                    
+                    // Redirect to payment page
+                    window.location.href = 'payment.html';
+                });
+            }
+        });
+    </script> -->
+</body>
+</html>

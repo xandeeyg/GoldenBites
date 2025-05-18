@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Bites - Notifications</title>
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .action-btn {
+            background-color: #f5f5f5;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <header class="main-header">
+
+            <div class="header-center">
+                <h1>Golden Bites</h1>
+            </div>
+            <div class="header-right">
+                <div class="avatar">
+                    <i class="fa fa-gear" style="font-size:24px"></i>
+                </div>
+            </div>
+        </header>
+        
+        <main class="main-content">
+            <div class="notifications-header">
+                <div class="notifications-title">Notifications</div>
+                <div class="notifications-actions">
+                    <button class="action-btn" id="mark-all-read"><i class="fas fa-check-double"></i> Mark all read</button>
+                    <!-- <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button> -->
+                </div>
+            </div>
+            
+            <div class="notifications-filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="order">Orders</button>
+                <button class="filter-btn" data-filter="promo">Promotions</button>
+                <button class="filter-btn" data-filter="system">System</button>
+                <button class="filter-btn" data-filter="unread">Unread</button>
+            </div>
+            
+            <div class="notification-list" id="notification-list">
+                <!-- Today's notifications -->
+                <div class="date-separator">Today</div>
+                
+                <div class="notification-item unread" data-type="order">
+                    <div class="notification-header">
+                        <div class="notification-icon order">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="notification-info">
+                            <div class="notification-title">Order Ready for Pickup</div>
+                            <div class="notification-time">30 minutes ago</div>
+                        </div>
+                    </div>
+                    <div class="notification-content">
+                        Your order #A1234 is ready for pickup. Please proceed to the counter with your order number.
+                    </div>
+                    <div class="notification-actions">
+                        <button class="notification-btn">View Order</button>
+                        <button class="notification-btn mark-read" data-id="1">Mark as read</button>
+                    </div>
+                </div>
+                
+                <div class="notification-item unread" data-type="promo">
+                    <div class="notification-header">
+                        <div class="notification-icon promo">
+                            <i class="fas fa-tag"></i>
+                        </div>
+                        <div class="notification-info">
+                            <div class="notification-title">Special Discount</div>
+                            <div class="notification-time">2 hours ago</div>
+                        </div>
+                    </div>
+                    <div class="notification-content">
+                        Enjoy 20% off on all breakfast items this weekend! Use code BREAKFAST20 at checkout.
+                    </div>
+                    <div class="notification-actions">
+                        <button class="notification-btn">View Offer</button>
+                        <button class="notification-btn mark-read" data-id="2">Mark as read</button>
+                    </div>
+                </div>
+                
+                <!-- Yesterday's notifications -->
+                <div class="date-separator">Yesterday</div>
+                
+                <div class="notification-item" data-type="order">
+                    <div class="notification-header">
+                        <div class="notification-icon order">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="notification-info">
+                            <div class="notification-title">Order Completed</div>
+                            <div class="notification-time">Yesterday, 3:45 PM</div>
+                        </div>
+                    </div>
+                    <div class="notification-content">
+                        Your order #A1198 has been completed. We hope you enjoyed your meal!
+                    </div>
+                    <div class="notification-actions">
+                        <button class="notification-btn">Rate Order</button>
+                        <button class="notification-btn">Reorder</button>
+                    </div>
+                </div>
+                
+                <div class="notification-item" data-type="system">
+                    <div class="notification-header">
+                        <div class="notification-icon system">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="notification-info">
+                            <div class="notification-title">App Update Available</div>
+                            <div class="notification-time">Yesterday, 10:20 AM</div>
+                        </div>
+                    </div>
+                    <div class="notification-content">
+                        A new version of Golden Bites app is available with exciting new features and improvements.
+                    </div>
+                    <div class="notification-actions">
+                        <button class="notification-btn">Update Now</button>
+                    </div>
+                </div>
+                
+                <!-- Older notifications -->
+                <div class="date-separator">Older</div>
+                
+                <div class="notification-item" data-type="promo">
+                    <div class="notification-header">
+                        <div class="notification-icon promo">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="notification-info">
+                            <div class="notification-title">Free Delivery Weekend</div>
+                            <div class="notification-time">May 12, 2024</div>
+                        </div>
+                    </div>
+                    <div class="notification-content">
+                        Enjoy free delivery on all orders above ₱200 this weekend. No promo code needed!
+                    </div>
+                </div>
+                
+                <div class="notification-item" data-type="system">
+                    <div class="notification-header">
+                        <div class="notification-icon system">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="notification-info">
+                            <div class="notification-title">Welcome to Golden Bites</div>
+                            <div class="notification-time">May 10, 2024</div>
+                        </div>
+                    </div>
+                    <div class="notification-content">
+                        Thank you for joining Golden Bites! Explore our menu and enjoy delicious meals delivered to your doorstep.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Empty state (hidden by default) -->
+            <div class="empty-notifications" id="empty-notifications" style="display: none;">
+                <div class="empty-icon">
+                    <i class="far fa-bell"></i>
+                </div>
+                <div class="empty-text">No notifications yet</div>
+                <div class="empty-subtext">We'll notify you when there's something new</div>
+                <button class="action-btn primary">Refresh</button>
+            </div>
+        </main>
+        
+        <nav class="bottom-nav">
+            <a href="home.html" class="nav-item">
+                <div class="nav-icon">🏠</div>
+                <span>Home</span>
+            </a>
+            <a href="order-details.html" class="nav-item">
+                <div class="nav-icon">🛒</div>
+                <span>Cart</span>
+            </a>
+            <a href="favorites.html" class="nav-item">
+                <div class="nav-icon">❤️</div>
+                <span>Favorites</span>
+            </a>
+            <a href="notifications.html" class="nav-item active">
+                <div class="nav-icon">🔔</div>
+                <span>Notifications</span>
+            </a>
+        </nav>
+    </div>
+    
+    <script src="./assets/js/app.js"></script>
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filter functionality
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const notificationItems = document.querySelectorAll('.notification-item');
+            const notificationList = document.getElementById('notification-list');
+            const emptyNotifications = document.getElementById('empty-notifications');
+            
+            // Add click event to filter buttons
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Get filter value
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Filter notifications
+                    let visibleCount = 0;
+                    
+                    notificationItems.forEach(item => {
+                        if (filter === 'all') {
+                            item.style.display = 'block';
+                            visibleCount++;
+                        } else if (filter === 'unread') {
+                            if (item.classList.contains('unread')) {
+                                item.style.display = 'block';
+                                visibleCount++;
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        } else {
+                            if (item.getAttribute('data-type') === filter) {
+                                item.style.display = 'block';
+                                visibleCount++;
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        }
+                    });
+                    
+                    // Show/hide date separators based on visible notifications
+                    const dateSeparators = document.querySelectorAll('.date-separator');
+                    dateSeparators.forEach(separator => {
+                        let nextElement = separator.nextElementSibling;
+                        let hasVisibleNotification = false;
+                        
+                        // Check if there's a visible notification after this separator and before the next separator
+                        while (nextElement && !nextElement.classList.contains('date-separator')) {
+                            if (nextElement.classList.contains('notification-item') && 
+                                nextElement.style.display !== 'none') {
+                                hasVisibleNotification = true;
+                                break;
+                            }
+                            nextElement = nextElement.nextElementSibling;
+                        }
+                        
+                        separator.style.display = hasVisibleNotification ? 'flex' : 'none';
+                    });
+                    
+                    // Show empty state if no notifications match the filter
+                    if (visibleCount === 0) {
+                        notificationList.style.display = 'none';
+                        emptyNotifications.style.display = 'flex';
+                    } else {
+                        notificationList.style.display = 'flex';
+                        emptyNotifications.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Mark as read functionality
+            const markReadButtons = document.querySelectorAll('.mark-read');
+            markReadButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const notificationId = this.getAttribute('data-id');
+                    const notificationItem = this.closest('.notification-item');
+                    
+                    // Remove unread class
+                    notificationItem.classList.remove('unread');
+                    
+                    // Remove the mark as read button
+                    this.remove();
+                    
+                    // You would typically send an API request here to update the notification status
+                    console.log(`Marked notification ${notificationId} as read`);
+                });
+            });
+            
+            // Mark all as read
+            const markAllReadBtn = document.getElementById('mark-all-read');
+            markAllReadBtn.addEventListener('click', function() {
+                const unreadNotifications = document.querySelectorAll('.notification-item.unread');
+                
+                unreadNotifications.forEach(notification => {
+                    // Remove unread class
+                    notification.classList.remove('unread');
+                    
+                    // Remove mark as read button
+                    const markReadBtn = notification.querySelector('.mark-read');
+                    if (markReadBtn) {
+                        markReadBtn.remove();
+                    }
+                });
+                
+                // You would typically send an API request here to update all notifications
+                console.log('Marked all notifications as read');
+            });
+            
+            // Make notification items clickable
+            notificationItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const type = this.getAttribute('data-type');
+                    
+                    // Handle click based on notification type
+                    switch(type) {
+                        case 'order':
+                            // Navigate to order details
+                            console.log('Navigate to order details');
+                            // window.location.href = 'order-tracking.html';
+                            break;
+                        case 'promo':
+                            // Navigate to promotions page
+                            console.log('Navigate to promotions');
+                            // window.location.href = 'promotions.html';
+                            break;
+                        case 'system':
+                            // Handle system notification
+                            console.log('Handle system notification');
+                            break;
+                    }
+                    
+                    // Mark as read when clicked
+                    if (this.classList.contains('unread')) {
+                        this.classList.remove('unread');
+                        
+                        // Remove mark as read button
+                        const markReadBtn = this.querySelector('.mark-read');
+                        if (markReadBtn) {
+                            markReadBtn.remove();
+                        }
+                    }
+                });
+            });
+        });
+    </script> -->
+</body>
+</html>

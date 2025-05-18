@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Bites - Order Details</title>
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="app-layout">
+        <header class="main-header">
+            <div class="header-center">
+                <h1>Golden Bites</h1>
+            </div>
+            <div class="header-right">
+                <!-- <div class="avatar">
+                    <i class="fa fa-gear" style="font-size:24px"></i>
+                </div> -->
+            </div>
+        </header>
+        
+        <main class="main-content">
+            <div class="order-details-container">
+                <h1 class="page-title">Order Details</h1>
+                
+                <div class="cart-items">
+                    <!-- Cart items will be loaded dynamically from localStorage -->
+                </div>
+                
+                <div class="order-summary">
+                    <div class="total-section">
+                        <div class="total-label">Total</div>
+                        <div class="total-amount">₱0.00</div>
+                    </div>
+                    
+                    <a href="payment.html" class="pay-btn">Proceed to payment</a>
+                </div>
+            </div>
+        </main>
+        
+        <nav class="bottom-nav">
+            <a href="home.html" class="nav-item">
+                <div class="nav-icon">🏠</div>
+                <span>Home</span>
+            </a>
+            <a href="order-details.html" class="nav-item active">
+                <div class="nav-icon">🛒</div>
+                <span>Cart</span>
+            </a>
+            <a href="favorites.html" class="nav-item">
+                <div class="nav-icon">❤️</div>
+                <span>Favorites</span>
+            </a>
+            <a href="notifications.html" class="nav-item">
+                <div class="nav-icon">🔔</div>
+                <span>Notifications</span>
+            </a>
+        </nav>
+    </div>
+    
+    <script src="./assets/js/app.js"></script>
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartContainer = document.querySelector('.cart-items');
+            const totalAmountEl = document.querySelector('.total-amount');
+            const proceedToPaymentBtn = document.querySelector('.pay-btn');
+        
+            function loadCart() {
+                const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+                cartContainer.innerHTML = '';
+                let total = 0;
+        
+                if (cartItems.length === 0) {
+                    cartContainer.innerHTML = '<div class="empty-cart">Your cart is empty</div>';
+                    proceedToPaymentBtn.classList.add('disabled');
+                    totalAmountEl.textContent = '₱0.00';
+                    return;
+                }
+        
+                proceedToPaymentBtn.classList.remove('disabled');
+        
+                cartItems.forEach((item, index) => {
+                    const cartItem = document.createElement('div');
+                    cartItem.classList.add('order-item');
+                    
+                    // Calculate item subtotal
+                    let itemSubtotal = item.price;
+                    let addOnsHtml = '';
+                    
+                    // Check if addons exists and has items
+                    if (item.addons && item.addons.length > 0) {
+                        addOnsHtml = '<div class="item-addons">';
+                        item.addons.forEach(addon => {
+                            addOnsHtml += `<p class="item-addon">+ ${addon.name} (₱${addon.price.toFixed(2)})</p>`;
+                            itemSubtotal += addon.price;
+                        });
+                        addOnsHtml += '</div>';
+                    }
+                    
+                    // Multiply by quantity
+                    const itemTotal = itemSubtotal * item.quantity;
+                    total += itemTotal;
+                    
+                    cartItem.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}" class="item-img">
+                        <div class="item-details">
+                            <h3 class="item-name">${item.name}</h3>
+                            <p class="item-quantity">Quantity: ${item.quantity}</p>
+                            ${addOnsHtml}
+                        </div>
+                        <div class="item-price">₱${itemTotal.toFixed(2)}</div>
+                        <button class="remove-btn" data-index="${index}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    `;
+                    
+                    cartContainer.appendChild(cartItem);
+                });
+        
+                totalAmountEl.textContent = `₱${total.toFixed(2)}`;
+                
+                // Save total to localStorage for payment page
+                localStorage.setItem('cartTotal', total.toFixed(2));
+                
+                // Attach event listeners to remove buttons
+                attachRemoveHandlers();
+            }
+        
+            function attachRemoveHandlers() {
+                const removeButtons = document.querySelectorAll('.remove-btn');
+                removeButtons.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        removeCartItem(index);
+                    });
+                });
+            }
+            
+            function removeCartItem(index) {
+                let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+                
+                if (index >= 0 && index < cartItems.length) {
+                    cartItems.splice(index, 1);
+                    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+                    loadCart(); // Reload the cart
+                }
+            }
+            
+            // When proceeding to payment, save cart items as order items
+            proceedToPaymentBtn.addEventListener('click', function(e) {
+                const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+                if (cartItems.length === 0) {
+                    e.preventDefault();
+                    alert('Your cart is empty');
+                } else {
+                    // Save cart items as order items for the payment page
+                    localStorage.setItem('orderItems', JSON.stringify(cartItems));
+                }
+            });
+        
+            // Load cart on page load
+            loadCart();
+        });
+    </script> -->
+</body>
+</html>

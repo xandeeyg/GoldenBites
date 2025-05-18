@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Bites - Favorites</title>
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .action-btn {
+            background-color: #f5f5f5;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <header class="main-header">
+            <div class="header-center">
+                <h1>Golden Bites</h1>
+            </div>
+            <div class="header-right">
+                <!-- <div class="avatar">
+                    <i class="fa fa-gear" style="font-size:24px"></i>
+                </div> -->
+            </div>
+        </header>
+        
+        <main class="main-content">
+            <div class="favorites-header">
+                <div class="favorites-title">My Favorites</div>
+                <div class="favorites-actions">
+                    <button class="action-btn" id="edit-favorites"><i class="fas fa-edit"></i> Edit</button>
+                    <!-- <button class="action-btn" id="sort-favorites"><i class="fas fa-sort"></i> Sort</button> -->
+                </div>
+            </div>
+            
+            <div class="favorites-filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="breakfast">Breakfast</button>
+                <button class="filter-btn" data-filter="lunch">Lunch</button>
+                <button class="filter-btn" data-filter="dinner">Dinner</button>
+                <button class="filter-btn" data-filter="dessert">Dessert</button>
+            </div>
+            
+            <!-- Collections section -->
+            <!-- <div class="collection-section">
+                <div class="collection-header">
+                    <div class="collection-title">My Collections</div>
+                    <a href="#" class="collection-action">View All</a>
+                </div>
+                
+                <div class="favorites-filter">
+                    <button class="filter-btn active" data-collection="all">All Items</button>
+                    <button class="filter-btn" data-collection="breakfast">Breakfast Favorites</button>
+                    <button class="filter-btn" data-collection="quick">Quick Meals</button>
+                    <button class="filter-btn" data-collection="dessert">Sweet Treats</button>
+                </div>
+            </div> -->
+            
+            <!-- Favorites grid -->
+            <div class="favorites-grid" id="favorites-grid">
+                <!-- Favorite item 1 -->
+                <div class="favorite-item" data-category="breakfast">
+                    <div class="favorite-img-container">
+                        <img src="./assets/pancake.jpg" alt="Pancake" class="favorite-img">
+                        <div class="favorite-category">Breakfast</div>
+                        <div class="favorite-actions">
+                            <button class="favorite-action-btn remove" data-id="pancake">
+                                <i class="fas fa-heart-broken"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="favorite-info">
+                        <a href="product-detail.html?product=pancake" class="favorite-name">Pancake</a>
+                        <div class="favorite-details">
+                            <div class="favorite-rating">
+                                <span class="favorite-star">⭐</span>
+                                <span>4.5</span>
+                            </div>
+                            <div class="favorite-price">₱ 20.00</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Favorite item 2 -->
+                <div class="favorite-item" data-category="breakfast">
+                    <div class="favorite-img-container">
+                        <img src="./assets/waffle.jpg" alt="Waffle" class="favorite-img">
+                        <div class="favorite-category">Breakfast</div>
+                        <div class="favorite-actions">
+                            <button class="favorite-action-btn remove" data-id="waffle">
+                                <i class="fas fa-heart-broken"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="favorite-info">
+                        <a href="product-detail.html?product=waffle" class="favorite-name">Waffle</a>
+                        <div class="favorite-details">
+                            <div class="favorite-rating">
+                                <span class="favorite-star">⭐</span>
+                                <span>3.8</span>
+                            </div>
+                            <div class="favorite-price">₱ 20.00</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Favorite item 3 -->
+                <div class="favorite-item" data-category="lunch">
+                    <div class="favorite-img-container">
+                        <img src="./assets/adobo.png" alt="Adobo" class="favorite-img">
+                        <div class="favorite-category">Lunch</div>
+                        <div class="favorite-actions">
+                            <button class="favorite-action-btn remove" data-id="adobo">
+                                <i class="fas fa-heart-broken"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="favorite-info">
+                        <a href="product-detail.html?product=adobo" class="favorite-name">Adobo</a>
+                        <div class="favorite-details">
+                            <div class="favorite-rating">
+                                <span class="favorite-star">⭐</span>
+                                <span>4.2</span>
+                            </div>
+                            <div class="favorite-price">₱ 75.00</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Favorite item 4 -->
+                <div class="favorite-item" data-category="dessert">
+                    <div class="favorite-img-container">
+                        <img src="./assets/turon.jpg" alt="Turon" class="favorite-img">
+                        <div class="favorite-category">Dessert</div>
+                        <div class="favorite-actions">
+                            <button class="favorite-action-btn remove" data-id="turon">
+                                <i class="fas fa-heart-broken"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="favorite-info">
+                        <a href="product-detail.html?product=turon" class="favorite-name">Turon</a>
+                        <div class="favorite-details">
+                            <div class="favorite-rating">
+                                <span class="favorite-star">⭐</span>
+                                <span>4.3</span>
+                            </div>
+                            <div class="favorite-price">₱ 15.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Empty state (hidden by default) -->
+            <div class="empty-favorites" id="empty-favorites" style="display: none;">
+                <div class="empty-icon">
+                    <i class="far fa-heart"></i>
+                </div>
+                <div class="empty-text">No favorites yet</div>
+                <div class="empty-subtext">Items you favorite will appear here</div>
+                <a href="home.html" class="action-btn primary">Browse Menu</a>
+            </div>
+        </main>
+        
+        <nav class="bottom-nav">
+            <a href="home.html" class="nav-item">
+                <div class="nav-icon">🏠</div>
+                <span>Home</span>
+            </a>
+            <a href="order-details.html" class="nav-item">
+                <div class="nav-icon">🛒</div>
+                <span>Cart</span>
+            </a>
+            <a href="favorites.html" class="nav-item active">
+                <div class="nav-icon">❤️</div>
+                <span>Favorites</span>
+            </a>
+            <a href="notifications.html" class="nav-item">
+                <div class="nav-icon">🔔</div>
+                <span>Notifications</span>
+            </a>
+        </nav>
+    </div>
+    
+    <script src="./assets/js/app.js"></script>
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get elements
+            const favoritesGrid = document.getElementById('favorites-grid');
+            const emptyFavorites = document.getElementById('empty-favorites');
+            const filterButtons = document.querySelectorAll('.filter-btn[data-filter]');
+            const collectionButtons = document.querySelectorAll('.filter-btn[data-collection]');
+            const favoriteItems = document.querySelectorAll('.favorite-item');
+            const removeButtons = document.querySelectorAll('.favorite-action-btn.remove');
+            const addToCartButtons = document.querySelectorAll('.favorite-action-btn.cart');
+            const editButton = document.getElementById('edit-favorites');
+            const sortButton = document.getElementById('sort-favorites');
+            
+            // Initialize favorites from localStorage or use demo data
+            function initializeFavorites() {
+                // Check if we have favorites in localStorage
+                const storedFavorites = localStorage.getItem('favorites');
+                
+                if (storedFavorites) {
+                    const favorites = JSON.parse(storedFavorites);
+                    
+                    // If no favorites, show empty state
+                    if (favorites.length === 0) {
+                        favoritesGrid.style.display = 'none';
+                        emptyFavorites.style.display = 'flex';
+                    }
+                    
+                    // In a real app, you would dynamically generate the favorites grid here
+                    // For this demo, we're using static HTML
+                }
+            }
+            
+            // Filter favorites by category
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all filter buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Get filter value
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Filter favorites
+                    let visibleCount = 0;
+                    
+                    favoriteItems.forEach(item => {
+                        if (filter === 'all') {
+                            item.style.display = 'block';
+                            visibleCount++;
+                        } else {
+                            if (item.getAttribute('data-category') === filter) {
+                                item.style.display = 'block';
+                                visibleCount++;
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        }
+                    });
+                    
+                    // Show/hide empty state
+                    if (visibleCount === 0) {
+                        favoritesGrid.style.display = 'none';
+                        emptyFavorites.style.display = 'flex';
+                    } else {
+                        favoritesGrid.style.display = 'grid';
+                        emptyFavorites.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Filter by collection
+            collectionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all collection buttons
+                    collectionButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Get collection value
+                    const collection = this.getAttribute('data-collection');
+                    
+                    // In a real app, you would filter by collection here
+                    console.log(`Filtering by collection: ${collection}`);
+                    
+                    // For this demo, we'll just reset the category filter to show all
+                    if (collection !== 'all') {
+                        // Find the "All" category filter and click it
+                        const allCategoryFilter = document.querySelector('.filter-btn[data-filter="all"]');
+                        if (allCategoryFilter) {
+                            allCategoryFilter.click();
+                        }
+                    }
+                });
+            });
+            
+            // Remove from favorites
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const productId = this.getAttribute('data-id');
+                    const favoriteItem = this.closest('.favorite-item');
+                    
+                    // Confirm removal
+                    if (confirm('Remove this item from your favorites?')) {
+                        // Animation for removal
+                        favoriteItem.style.opacity = '0';
+                        favoriteItem.style.transform = 'scale(0.8)';
+                        
+                        setTimeout(() => {
+                            // Remove from DOM
+                            favoriteItem.remove();
+                            
+                            // Check if there are any favorites left
+                            const remainingFavorites = document.querySelectorAll('.favorite-item');
+                            if (remainingFavorites.length === 0) {
+                                favoritesGrid.style.display = 'none';
+                                emptyFavorites.style.display = 'flex';
+                            }
+                            
+                            // In a real app, you would update localStorage here
+                            console.log(`Removed ${productId} from favorites`);
+                            
+                            // Example of updating localStorage (commented out for demo)
+                            /*
+                            const storedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+                            const updatedFavorites = storedFavorites.filter(item => item.id !== productId);
+                            localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+                            */
+                        }, 300);
+                    }
+                });
+            });
+            
+            // Add to cart
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const productId = this.getAttribute('data-id');
+                    
+                    // Visual feedback
+                    this.innerHTML = '<i class="fas fa-check"></i>';
+                    this.style.backgroundColor = '#28c76f';
+                    this.style.color = 'white';
+                    
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-cart-plus"></i>';
+                        this.style.backgroundColor = '';
+                        this.style.color = '';
+                    }, 1500);
+                    
+                    // In a real app, you would add to cart in localStorage here
+                    console.log(`Added ${productId} to cart`);
+                    
+                    // Example of adding to cart (simplified for demo)
+                    const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+                    
+                    // Check if product is already in cart
+                    const existingItem = cartItems.find(item => item.id === productId);
+                    
+                    if (existingItem) {
+                        // Increase quantity
+                        existingItem.quantity += 1;
+                    } else {
+                        // Add new item with quantity 1
+                        // In a real app, you would get the product details from a product database
+                        // For this demo, we'll just use the product ID
+                        cartItems.push({
+                            id: productId,
+                            quantity: 1
+                        });
+                    }
+                    
+                    // Save to localStorage
+                    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+                });
+            });
+            
+            // Edit favorites
+            editButton.addEventListener('click', function() {
+                // Toggle edit mode
+                const isEditing = favoritesGrid.classList.toggle('editing');
+                
+                if (isEditing) {
+                    // Change button text
+                    this.innerHTML = '<i class="fas fa-check"></i> Done';
+                    
+                    // Show remove buttons
+                    removeButtons.forEach(btn => {
+                        btn.style.display = 'flex';
+                    });
+                    
+                    // Hide add to cart buttons
+                    addToCartButtons.forEach(btn => {
+                        btn.style.display = 'none';
+                    });
+                } else {
+                    // Restore button text
+                    this.innerHTML = '<i class="fas fa-edit"></i> Edit';
+                    
+                    // Show both buttons
+                    removeButtons.forEach(btn => {
+                        btn.style.display = 'flex';
+                    });
+                    
+                    addToCartButtons.forEach(btn => {
+                        btn.style.display = 'flex';
+                    });
+                }
+            });
+            
+            // Sort favorites
+            sortButton.addEventListener('click', function() {
+                // Show sort options in a dropdown or modal
+                const sortOptions = ['Name (A-Z)', 'Name (Z-A)', 'Price (Low to High)', 'Price (High to Low)', 'Rating'];
+                
+                // For this demo, we'll just show an alert
+                alert('Sort options: ' + sortOptions.join(', '));
+                
+                // In a real app, you would implement sorting logic here
+            });
+            
+            // Initialize favorites
+            initializeFavorites();
+        });
+    </script> -->
+</body>
+</html>

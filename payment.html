@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Bites - Payment</title>
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="./assets/js/auth-check.js"></script>
+</head>
+<body>
+    <div class="app-layout">
+        <header class="main-header">
+            <div class="header-left">
+                <a href="home.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            </div>
+            <div class="header-center">
+                <div class="header-subtitle"></div>
+                <h1>Order Details</h1>
+            </div>
+            <div class="header-right">
+                <!-- <div class="avatar">
+                    <i class="fa fa-gear" style="font-size:24px"></i>
+                </div> -->
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="payment-container">
+                <div class="payment-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h1 class="page-title" style="margin: 0;">Payment</h1>
+                    <p class="payment-date" id="payment-date"style="margin: 0;">10 · 17 · 2024</p>
+                </div>
+                
+
+                <div class="queue-info">
+                    <div class="queue-label">Queue Number:</div>
+                    <div class="queue-number" id="queue-number"></div>
+                </div>
+
+                <div class="payment-section">
+                    <h3 class="section-header">Contact Information</h3>
+                    <div class="contact-info">
+                        <span class="info-label">Email Address</span>
+                        <span class="info-value">suziennemagno@gmail.com</span>
+                    </div>
+                </div>
+
+                <div class="payment-section">
+                    <h3 class="section-header">Order Summary</h3>
+                </div>
+
+                <div id="order-items-container">
+                    <!-- Order items will be dynamically inserted here -->
+                </div>
+
+                <div class="payment-section">
+                    <h3 class="section-header">Payment Method</h3>
+                    <div class="payment-methods" id="payment-methods">
+                        <div class="payment-method active" data-method="Cash">
+                            <i class="fas fa-money-bill-wave" style="margin-right: 5px;"></i> Cash
+                        </div>
+                        <div class="payment-method" data-method="Gcash">
+                            <i class="fas fa-mobile-alt" style="margin-right: 5px;"></i> Gcash
+                        </div>
+                        <div class="payment-method" data-method="Bank">
+                            <i class="fas fa-university" style="margin-right: 5px;"></i> Bank
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payment-section">
+                    <h3 class="section-header">Pickup Method</h3>
+                    <div class="pickup-options">
+                        <div class="pickup-option active">
+                            <input type="radio" id="pickup" name="delivery" checked />
+                            <label for="pickup">Pickup</label>
+                            <span class="pickup-time">3-5 mins</span>
+                        </div>
+                        <div class="pickup-option">
+                            <input type="radio" id="delivery" name="delivery" />
+                            <label for="delivery">Delivery</label>
+                            <span class="pickup-time">15-20 mins</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payment-section">
+                    <h3 class="section-header">Optional Note</h3>
+                    <textarea class="note-field" placeholder="Add Note"></textarea>
+                </div>
+
+                <div class="order-summary">
+                    <div class="total-section">
+                        <div class="total-label">Total</div>
+                        <div class="total-amount" id="total-amount">₱0.00</div>
+                    </div>
+                    <!-- Changed from <a> to <button> and removed href -->
+                    <button type="button" class="pay-btn" id="place-order-btn">Place Order</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Order Confirmation Popup -->
+    <div class="popup-overlay" id="order-confirmation-popup">
+        <div class="popup-content">
+            <div class="popup-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h2 class="popup-title">Order Placed!</h2>
+            <p class="popup-message">Your order has been successfully placed and is being prepared.</p>
+            <div class="popup-order-number">
+                Queue#: <span id="popup-order-number"></span>
+            </div>
+            <div class="popup-buttons">
+                <a href="order-tracking.html" class="popup-btn popup-btn-primary">Track My Order</a>
+                <a href="home.html" class="popup-btn popup-btn-secondary">Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="./assets/js/app.js"></script>
+
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Generate order/queue number on page load
+            const orderNumber = generateOrderNumber();
+            document.getElementById('queue-number').textContent = orderNumber;
+            
+            // Handle payment method selection
+            const paymentMethods = document.querySelectorAll('.payment-method');
+            let selectedPaymentMethod = 'Cash'; // Default payment method
+            
+            // Add click event to payment methods
+            paymentMethods.forEach(method => {
+                method.addEventListener('click', function() {
+                    // Remove active class from all methods
+                    paymentMethods.forEach(m => m.classList.remove('active'));
+                    
+                    // Add active class to clicked method
+                    this.classList.add('active');
+                    
+                    // Store selected method
+                    selectedPaymentMethod = this.getAttribute('data-method');
+                    
+                    // Visual feedback - scale effect
+                    this.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                    
+                    // Save to localStorage
+                    localStorage.setItem('selectedPaymentMethod', selectedPaymentMethod);
+                    
+                    console.log('Selected payment method:', selectedPaymentMethod);
+                });
+            });
+            
+            // Handle pickup/delivery radio buttons and styling
+            const pickupOptions = document.querySelectorAll('.pickup-option');
+            const radios = document.querySelectorAll('input[name="delivery"]');
+            
+            // Add click event to the entire pickup option div
+            pickupOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Find the radio button inside this option
+                    const radio = this.querySelector('input[type="radio"]');
+                    if (radio) {
+                        // Check the radio button
+                        radio.checked = true;
+                        
+                        // Update active class
+                        pickupOptions.forEach(opt => opt.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        // Update pickup time visibility
+                        updatePickupTimeVisibility();
+                        
+                        // Save selected delivery method
+                        localStorage.setItem('deliveryMethod', radio.id);
+                    }
+                });
+            });
+            
+            // Also handle direct radio button changes
+            radios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    // Update active class
+                    pickupOptions.forEach(opt => opt.classList.remove('active'));
+                    this.closest('.pickup-option').classList.add('active');
+                    
+                    // Update pickup time visibility
+                    updatePickupTimeVisibility();
+                    
+                    // Save selected delivery method
+                    localStorage.setItem('deliveryMethod', this.id);
+                });
+            });
+            
+            function updatePickupTimeVisibility() {
+                document.querySelectorAll('.pickup-time').forEach(span => span.style.display = 'none');
+                radios.forEach(radio => {
+                    if (radio.checked) {
+                        const timeSpan = radio.parentElement.querySelector('.pickup-time');
+                        if (timeSpan) timeSpan.style.display = 'inline';
+                    }
+                });
+            }
+
+            // Initialize pickup option state
+            updatePickupTimeVisibility();
+            
+            // Set current date
+            const today = new Date();
+            const formattedDate = `${today.getMonth() + 1} · ${today.getDate()} · ${today.getFullYear()}`;
+            document.getElementById('payment-date').textContent = formattedDate;
+            
+            // Load order items from localStorage
+            const orderItems = JSON.parse(localStorage.getItem('orderItems')) || [];
+            const orderItemsContainer = document.getElementById('order-items-container');
+            let totalAmount = 0;
+            
+            // If no order items found, check cart items
+            if (orderItems.length === 0) {
+                const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+                if (cartItems.length > 0) {
+                    // Use cart items instead
+                    renderOrderItems(cartItems);
+                } else {
+                    // No items found, show message
+                    orderItemsContainer.innerHTML = '<p>No items in your order.</p>';
+                }
+            } else {
+                // Render order items
+                renderOrderItems(orderItems);
+            }
+            
+            function renderOrderItems(items) {
+                orderItemsContainer.innerHTML = ''; // Clear container
+                
+                items.forEach(item => {
+                    // Calculate item total price including addons
+                    let itemPrice = item.price;
+                    let addonText = '';
+                    
+                    if (item.addons && item.addons.length > 0) {
+                        item.addons.forEach(addon => {
+                            itemPrice += addon.price;
+                            addonText += `<p class="item-addon">+ ${addon.name}</p>`;
+                        });
+                    }
+                    
+                    const itemTotal = itemPrice * item.quantity;
+                    totalAmount += itemTotal;
+                    
+                    // Create order item HTML
+                    const orderItemHTML = `
+                        <div class="order-item">
+                            <img src="${item.image}" alt="${item.name}" class="item-img">
+                            <div class="item-details">
+                                <h3 class="item-name">${item.name}</h3>
+                                <p class="item-quantity">Quantity: ${item.quantity}</p>
+                                ${addonText}
+                            </div>
+                            <div class="item-price">₱ ${itemTotal.toFixed(2)}</div>
+                        </div>
+                    `;
+                    
+                    orderItemsContainer.innerHTML += orderItemHTML;
+                });
+                
+                // Update total amount
+                document.getElementById('total-amount').textContent = `₱${totalAmount.toFixed(2)}`;
+            }
+            
+            // Generate a random order number
+            function generateOrderNumber() {
+                const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                const letter = letters[Math.floor(Math.random() * letters.length)];
+                const numbers = Math.floor(1000 + Math.random() * 9000);
+                return letter + numbers;
+            }
+            
+            // Handle place order button
+            const placeOrderBtn = document.getElementById('place-order-btn');
+            const orderPopup = document.getElementById('order-confirmation-popup');
+            
+            placeOrderBtn.addEventListener('click', function(e) {
+                // Prevent default behavior
+                e.preventDefault();
+                
+                console.log('Place order button clicked'); // Debug log
+                
+                // Get order details
+                const orderItems = JSON.parse(localStorage.getItem('orderItems')) || JSON.parse(localStorage.getItem('cartItems')) || [];
+                
+                // If no items, show error and return
+                if (orderItems.length === 0) {
+                    alert('Please add items to your order before proceeding.');
+                    return;
+                }
+                
+                // Use the same order number that was generated on page load
+                const orderNumber = document.getElementById('queue-number').textContent;
+                document.getElementById('popup-order-number').textContent = orderNumber;
+                
+                // Create order object
+                const orderDetails = {
+                    orderNumber: orderNumber,
+                    items: orderItems,
+                    paymentMethod: selectedPaymentMethod,
+                    deliveryMethod: document.querySelector('input[name="delivery"]:checked').id,
+                    note: document.querySelector('.note-field').value,
+                    total: totalAmount,
+                    date: formattedDate,
+                    status: 'preparing',
+                    estimatedTime: document.querySelector('input[name="delivery"]:checked').id === 'pickup' ? '3-5' : '15-20',
+                    orderTime: new Date().toISOString()
+                };
+                
+                // Save order details for tracking page
+                localStorage.setItem('currentOrder', JSON.stringify(orderDetails));
+                
+                // Show popup
+                orderPopup.classList.add('active');
+                console.log('Popup should be visible now'); // Debug log
+            });
+            
+            // Check if there's a previously selected payment method
+            const savedPaymentMethod = localStorage.getItem('selectedPaymentMethod');
+            if (savedPaymentMethod) {
+                // Find and activate the saved payment method
+                paymentMethods.forEach(method => {
+                    if (method.getAttribute('data-method') === savedPaymentMethod) {
+                        // Remove active class from all methods
+                        paymentMethods.forEach(m => m.classList.remove('active'));
+                        // Add active class to this method
+                        method.classList.add('active');
+                        selectedPaymentMethod = savedPaymentMethod;
+                    }
+                });
+            }
+            
+            // Check if there's a previously selected delivery method
+            const savedDeliveryMethod = localStorage.getItem('deliveryMethod');
+            if (savedDeliveryMethod) {
+                // Find and activate the saved delivery method
+                radios.forEach(radio => {
+                    if (radio.id === savedDeliveryMethod) {
+                        radio.checked = true;
+                        
+                        // Update active class
+                        pickupOptions.forEach(opt => opt.classList.remove('active'));
+                        radio.closest('.pickup-option').classList.add('active');
+                        
+                        // Update pickup time visibility
+                        updatePickupTimeVisibility();
+                    }
+                });
+            }
+        });
+    </script> -->
+</body>
+</html>

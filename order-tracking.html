@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Bites - Order Tracking</title>
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="app-layout">
+        <header class="main-header">
+            <div class="header-left">
+                <a href="home.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+            </div>
+            <div class="header-center">
+                <h1>Track Order</h1>
+            </div>
+            <div class="header-right">
+                <div class="avatar">
+                    <i class="fa fa-gear" style="font-size:24px"></i>
+                </div>
+            </div>
+        </header>
+        
+        <main class="main-content">
+            <div class="tracking-container">
+                <div class="order-header">
+                    <div class="order-number" id="order-number">Order #S3150</div>
+                    <div class="order-status" id="order-status">Preparing</div>
+                </div>
+                
+                <div class="estimated-time">
+                    <div class="time-label">Estimated Time</div>
+                    <div class="time-value" id="estimated-minutes">3-5</div>
+                    <div class="time-unit">minutes</div>
+                </div>
+                
+                <div class="progress-tracker">
+                    <div class="progress-steps">
+                        <div class="progress-bar" id="progress-bar"></div>
+                        
+                        <div class="step completed" id="step-1">
+                            <div class="step-icon"><i class="fas fa-check"></i></div>
+                            <div class="step-label">Order Placed</div>
+                        </div>
+                        
+                        <div class="step active" id="step-2">
+                            <div class="step-icon"><i class="fas fa-utensils"></i></div>
+                            <div class="step-label">Preparing</div>
+                        </div>
+                        
+                        <div class="step" id="step-3">
+                            <div class="step-icon"><i class="fas fa-box"></i></div>
+                            <div class="step-label">Ready for Pickup</div>
+                        </div>
+                        
+                        <div class="step" id="step-4">
+                            <div class="step-icon"><i class="fas fa-check-circle"></i></div>
+                            <div class="step-label">Completed</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="order-details">
+                    <h3>Order Summary</h3>
+                    <div id="tracking-order-items">
+                        <!-- Order items will be dynamically inserted here -->
+                    </div>
+                </div>
+                
+                <div class="delivery-details">
+                    <h3>Order Details</h3>
+                    
+                    <div class="detail-row">
+                        <div class="detail-label">Order Date:</div>
+                        <div class="detail-value" id="order-date">May 13, 2025</div>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <div class="detail-label">Payment Method:</div>
+                        <div class="detail-value" id="payment-method">Cash</div>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <div class="detail-label">Pickup Method:</div>
+                        <div class="detail-value" id="pickup-method">Pickup</div>
+                    </div>
+                    
+                    <div class="detail-row" id="note-row" style="display: none;">
+                        <div class="detail-label">Note:</div>
+                        <div class="detail-value" id="order-note"></div>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <div class="detail-label">Total:</div>
+                        <div class="detail-value" id="order-total">₱0.00</div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <a href="home.html" class="action-btn secondary-btn">Back to Home</a>
+                    <a href="#" class="action-btn primary-btn" id="support-btn">Contact Support</a>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="./assets/js/app.js"></script>
+
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load order details from localStorage
+            const currentOrder = JSON.parse(localStorage.getItem('currentOrder'));
+            
+            if (!currentOrder) {
+                // No order found, redirect to home
+                window.location.href = 'home.html';
+                return;
+            }
+            
+            // Update order number
+            document.getElementById('order-number').textContent = `Order #${currentOrder.orderNumber}`;
+            
+            // Update estimated time
+            document.getElementById('estimated-minutes').textContent = currentOrder.estimatedTime;
+            
+            // Update order status
+            const orderStatus = document.getElementById('order-status');
+            orderStatus.textContent = capitalizeFirstLetter(currentOrder.status);
+            
+            // Update progress bar based on status
+            updateProgressBar(currentOrder.status);
+            
+            // Update order details
+            document.getElementById('order-date').textContent = currentOrder.date;
+            document.getElementById('payment-method').textContent = currentOrder.paymentMethod;
+            document.getElementById('pickup-method').textContent = 
+                currentOrder.deliveryMethod === 'pickup' ? 'Pickup' : 'Delivery';
+            document.getElementById('order-total').textContent = `₱${currentOrder.total.toFixed(2)}`;
+            
+            // Show note if provided
+            if (currentOrder.note && currentOrder.note.trim() !== '') {
+                document.getElementById('order-note').textContent = currentOrder.note;
+                document.getElementById('note-row').style.display = 'flex';
+            }
+            
+            // Render order items
+            renderOrderItems(currentOrder.items);
+            
+            // Simulate order progress (for demo purposes)
+            simulateOrderProgress();
+            
+            // Support button click
+            document.getElementById('support-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Support feature will be implemented in a future update.');
+            });
+            
+            // Helper functions
+            function capitalizeFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+            
+            function updateProgressBar(status) {
+                const progressBar = document.getElementById('progress-bar');
+                const step1 = document.getElementById('step-1');
+                const step2 = document.getElementById('step-2');
+                const step3 = document.getElementById('step-3');
+                const step4 = document.getElementById('step-4');
+                
+                // Reset all steps
+                [step1, step2, step3, step4].forEach(step => {
+                    step.classList.remove('active', 'completed');
+                });
+                
+                // Set progress based on status
+                switch(status) {
+                    case 'placed':
+                        step1.classList.add('active');
+                        progressBar.style.width = '0%';
+                        break;
+                    case 'preparing':
+                        step1.classList.add('completed');
+                        step2.classList.add('active');
+                        progressBar.style.width = '33%';
+                        break;
+                    case 'ready':
+                        step1.classList.add('completed');
+                        step2.classList.add('completed');
+                        step3.classList.add('active');
+                        progressBar.style.width = '66%';
+                        break;
+                    case 'completed':
+                        step1.classList.add('completed');
+                        step2.classList.add('completed');
+                        step3.classList.add('completed');
+                        step4.classList.add('active');
+                        progressBar.style.width = '100%';
+                        break;
+                    default:
+                        step1.classList.add('active');
+                        progressBar.style.width = '0%';
+                }
+            }
+            
+            function renderOrderItems(items) {
+                const orderItemsContainer = document.getElementById('tracking-order-items');
+                orderItemsContainer.innerHTML = '';
+                
+                items.forEach(item => {
+                    // Calculate item total price including addons
+                    let itemPrice = item.price;
+                    let addonText = '';
+                    
+                    if (item.addons && item.addons.length > 0) {
+                        item.addons.forEach(addon => {
+                            itemPrice += addon.price;
+                            addonText += `${addon.name}, `;
+                        });
+                        // Remove trailing comma and space
+                        addonText = addonText.slice(0, -2);
+                    }
+                    
+                    const itemTotal = itemPrice * item.quantity;
+                    
+                    // Create order item HTML
+                    const orderItemHTML = `
+                        <div class="order-item">
+                            <div class="item-quantity">x${item.quantity}</div>
+                            <div class="item-details">
+                                <div class="item-name">${item.name}</div>
+                                ${addonText ? `<div class="item-addons">Add-ons: ${addonText}</div>` : ''}
+                            </div>
+                            <div class="item-price">₱${itemTotal.toFixed(2)}</div>
+                        </div>
+                    `;
+                    
+                    orderItemsContainer.innerHTML += orderItemHTML;
+                });
+            }
+            
+            function simulateOrderProgress() {
+                // This is just for demo purposes to show the progress changing
+                // In a real app, this would be updated via server/API
+                
+                // Only simulate if the order is in 'preparing' status
+                if (currentOrder.status !== 'preparing') return;
+                
+                // Simulate progress after 10 seconds
+                setTimeout(() => {
+                    currentOrder.status = 'ready';
+                    orderStatus.textContent = 'Ready for Pickup';
+                    updateProgressBar('ready');
+                    localStorage.setItem('currentOrder', JSON.stringify(currentOrder));
+                    
+                    // Simulate completion after another 10 seconds
+                    setTimeout(() => {
+                        currentOrder.status = 'completed';
+                        orderStatus.textContent = 'Completed';
+                        updateProgressBar('completed');
+                        localStorage.setItem('currentOrder', JSON.stringify(currentOrder));
+                    }, 10000);
+                    
+                }, 10000);
+            }
+        });
+    </script> -->
+</body>
+</html>
